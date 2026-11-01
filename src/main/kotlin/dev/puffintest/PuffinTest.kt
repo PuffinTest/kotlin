@@ -129,6 +129,16 @@ fun expectFalse(actual: Boolean, message: String? = null) {
     if (actual) throw ExpectationFailure(message ?: "Expected false", false, actual, hasValues = true)
 }
 
+/** Fail unless [actual] is null. */
+fun expectNull(actual: Any?, message: String? = null) {
+    if (actual != null) throw ExpectationFailure(message ?: "Expected null", null, actual, hasValues = true)
+}
+
+/** Fail unless [actual] is non-null. */
+fun expectNotNull(actual: Any?, message: String? = null) {
+    if (actual == null) throw ExpectationFailure(message ?: "Expected a non-null value", "non-null", actual, hasValues = true)
+}
+
 /** Fail unless [item] is present in [container]. */
 fun expectContains(container: Iterable<*>, item: Any?, message: String? = null) {
     if (container.none { Objects.deepEquals(it, item) }) {

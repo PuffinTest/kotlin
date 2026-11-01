@@ -3,6 +3,8 @@ package dev.puffintest.examples
 import dev.puffintest.expectContains
 import dev.puffintest.expectEqual
 import dev.puffintest.expectLengthBetween
+import dev.puffintest.expectNull
+import dev.puffintest.expectNotNull
 import dev.puffintest.runTests
 import dev.puffintest.test
 import kotlin.system.exitProcess
@@ -12,6 +14,8 @@ fun main() {
         listOf(
             test("formats a title") {
                 expectEqual("HELLO, PUFFIN", "hello, puffin".uppercase())
+                expectNull(null)
+                expectNotNull("puffin")
             },
             test("finds an item", tags = setOf("unit")) {
                 expectContains(listOf("puffin", "tern"), "puffin")
