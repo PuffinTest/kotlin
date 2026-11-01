@@ -18,6 +18,7 @@ Declare cases with `test(name) { ... }` and run them with `runTests`:
 val cases = listOf(
     test("greets the user") {
         expectEqual("HELLO", "hello".uppercase())
+        expectBetween(18.0, 13.0, 19.0)
     },
 )
 val status = runTests(cases)
@@ -25,6 +26,6 @@ val status = runTests(cases)
 
 The runner returns `0` when all cases pass and `1` when a case fails or no cases match. Each case runs independently. Failure reports show the case, expectation message, expected and actual values when available, and the first stack location outside PuffinTest.
 
-The main helpers are `expectEqual`, `expectNotEqual`, `expectClose`, `expectTrue`, `expectFalse`, `expectStartsWith`, `expectEndsWith`, `expectContains`, `expectNotContains`, `expectThrows<T>`, and `fail`. Prefix and suffix checks use Kotlin's case-sensitive `String.startsWith` and `String.endsWith` behavior. `runTests` also accepts `filter`, `tag`, `failFast`, `beforeEach`, and `afterEach` options.
+The main helpers are `expectEqual`, `expectNotEqual`, `expectClose`, `expectBetween`, `expectTrue`, `expectFalse`, `expectStartsWith`, `expectEndsWith`, `expectContains`, `expectNotContains`, `expectThrows<T>`, and `fail`. `expectBetween` uses inclusive numeric bounds. Prefix and suffix checks use Kotlin's case-sensitive `String.startsWith` and `String.endsWith` behavior. `runTests` also accepts `filter`, `tag`, `failFast`, `beforeEach`, and `afterEach` options.
 
 This implementation is an early draft and has not yet been verified. Equality follows Kotlin's `==` semantics except that array values are compared with Java deep equality. It is synchronous and JVM-only.

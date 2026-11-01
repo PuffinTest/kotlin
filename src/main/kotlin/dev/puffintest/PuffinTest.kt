@@ -72,6 +72,16 @@ fun expectClose(actual: Double, expected: Double, relTolerance: Double = 1e-9, a
     if (!close) throw ExpectationFailure("Values are not close", expected, actual, hasValues = true)
 }
 
+/** Fail unless [actual] is between [minimum] and [maximum], inclusive. */
+fun expectBetween(actual: Double, minimum: Double, maximum: Double) {
+    require(!minimum.isNaN() && !maximum.isNaN() && minimum <= maximum) {
+        "minimum must be less than or equal to maximum"
+    }
+    if (!(actual >= minimum && actual <= maximum)) {
+        throw ExpectationFailure("Value is outside the expected range", "between $minimum and $maximum, inclusive", actual, hasValues = true)
+    }
+}
+
 /** Fail unless [actual] is true. */
 fun expectTrue(actual: Boolean, message: String? = null) {
     if (!actual) throw ExpectationFailure(message ?: "Expected true", true, actual, hasValues = true)
