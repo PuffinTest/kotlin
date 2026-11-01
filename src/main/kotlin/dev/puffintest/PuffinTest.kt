@@ -46,6 +46,16 @@ fun expectNotEqual(actual: Any?, unexpected: Any?, message: String? = null) {
     }
 }
 
+/** Fail unless two numbers are close under relative and absolute tolerances. */
+fun expectClose(actual: Double, expected: Double, relTolerance: Double = 1e-9, absTolerance: Double = 0.0) {
+    require(relTolerance.isFinite() && absTolerance.isFinite() && relTolerance >= 0 && absTolerance >= 0) {
+        "tolerances must be finite and nonnegative"
+    }
+    val close = actual == expected || (actual.isFinite() && expected.isFinite() &&
+        kotlin.math.abs(actual - expected) <= maxOf(relTolerance * maxOf(kotlin.math.abs(actual), kotlin.math.abs(expected)), absTolerance))
+    if (!close) throw ExpectationFailure("Values are not close", expected, actual, hasValues = true)
+}
+
 /** Fail unless [actual] is true. */
 fun expectTrue(actual: Boolean, message: String? = null) {
     if (!actual) throw ExpectationFailure(message ?: "Expected true", true, actual, hasValues = true)
