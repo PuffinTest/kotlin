@@ -75,10 +75,24 @@ fun expectContains(container: Iterable<*>, item: Any?, message: String? = null) 
     }
 }
 
+/** Fail if [item] occurs in [container]. */
+fun expectNotContains(container: Iterable<*>, item: Any?, message: String? = null) {
+    if (container.any { Objects.deepEquals(it, item) }) {
+        throw ExpectationFailure(message ?: "Item is unexpectedly present in the container", "a container not containing $item", container, hasValues = true)
+    }
+}
+
 /** Fail unless [item] is a key in [container]. */
 fun expectContains(container: Map<*, *>, item: Any?, message: String? = null) {
     if (!container.containsKey(item)) {
         throw ExpectationFailure(message ?: "Key is not present in the map", "a map containing key $item", container, hasValues = true)
+    }
+}
+
+/** Fail if [item] is a key in [container]. */
+fun expectNotContains(container: Map<*, *>, item: Any?, message: String? = null) {
+    if (container.containsKey(item)) {
+        throw ExpectationFailure(message ?: "Key is unexpectedly present in the map", "a map without key $item", container, hasValues = true)
     }
 }
 
