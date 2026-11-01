@@ -74,6 +74,29 @@ fun expectNotEndsWith(actual: String, suffix: String, message: String? = null) {
     }
 }
 
+/** Fail unless [actual] has a length in the inclusive [minimum] to [maximum] range. */
+fun expectLengthBetween(actual: Any, minimum: Int, maximum: Int, message: String? = null) {
+    require(minimum >= 0 && maximum >= 0 && minimum <= maximum) { "length bounds must be nonnegative and ordered" }
+    val length = when (actual) {
+        is CharSequence -> actual.length
+        is Collection<*> -> actual.size
+        is Map<*, *> -> actual.size
+        is Array<*> -> actual.size
+        is BooleanArray -> actual.size
+        is ByteArray -> actual.size
+        is CharArray -> actual.size
+        is DoubleArray -> actual.size
+        is FloatArray -> actual.size
+        is IntArray -> actual.size
+        is LongArray -> actual.size
+        is ShortArray -> actual.size
+        else -> throw IllegalArgumentException("value must be a collection, map, string, or array")
+    }
+    if (length !in minimum..maximum) {
+        throw ExpectationFailure(message ?: "Value length is outside the expected range", "length between $minimum and $maximum, inclusive", length, hasValues = true)
+    }
+}
+
 /** Fail unless two numbers are close under relative and absolute tolerances. */
 fun expectClose(actual: Double, expected: Double, relTolerance: Double = 1e-9, absTolerance: Double = 0.0) {
     require(relTolerance.isFinite() && absTolerance.isFinite() && relTolerance >= 0 && absTolerance >= 0) {
