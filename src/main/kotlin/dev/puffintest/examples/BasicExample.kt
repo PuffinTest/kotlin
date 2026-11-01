@@ -23,6 +23,8 @@ fun main() {
             },
             test("finds an item", tags = setOf("unit")) {
                 expectContains(listOf("puffin", "tern"), "puffin")
+                expectContains("puffin test", "test")
+                expectNotContains("puffin test", "penguin")
                 expectLengthBetween(listOf("puffin", "tern"), 1, 3)
             },
         ),

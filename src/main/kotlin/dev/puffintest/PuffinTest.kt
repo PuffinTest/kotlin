@@ -181,6 +181,20 @@ fun expectNotContains(container: Map<*, *>, item: Any?, message: String? = null)
     }
 }
 
+/** Fail unless [actual] contains [substring], using case-sensitive matching. */
+fun expectContains(actual: String, substring: String, message: String? = null) {
+    if (!actual.contains(substring)) {
+        throw ExpectationFailure(message ?: "Text does not contain the expected substring", "text containing $substring", actual, hasValues = true)
+    }
+}
+
+/** Fail if [actual] contains [substring], using case-sensitive matching. */
+fun expectNotContains(actual: String, substring: String, message: String? = null) {
+    if (actual.contains(substring)) {
+        throw ExpectationFailure(message ?: "Text unexpectedly contains the substring", "text without $substring", actual, hasValues = true)
+    }
+}
+
 /** Explicitly fail the current test case. */
 fun fail(message: String = "Explicit failure"): Nothing = throw ExpectationFailure(message)
 
