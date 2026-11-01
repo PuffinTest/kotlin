@@ -60,6 +60,20 @@ fun expectEndsWith(actual: String, suffix: String, message: String? = null) {
     }
 }
 
+/** Fail if [actual] starts with [prefix]. */
+fun expectNotStartsWith(actual: String, prefix: String, message: String? = null) {
+    if (actual.startsWith(prefix)) {
+        throw ExpectationFailure(message ?: "Text unexpectedly starts with the prefix", "text not starting with $prefix", actual, hasValues = true)
+    }
+}
+
+/** Fail if [actual] ends with [suffix]. */
+fun expectNotEndsWith(actual: String, suffix: String, message: String? = null) {
+    if (actual.endsWith(suffix)) {
+        throw ExpectationFailure(message ?: "Text unexpectedly ends with the suffix", "text not ending with $suffix", actual, hasValues = true)
+    }
+}
+
 /** Fail unless two numbers are close under relative and absolute tolerances. */
 fun expectClose(actual: Double, expected: Double, relTolerance: Double = 1e-9, absTolerance: Double = 0.0) {
     require(relTolerance.isFinite() && absTolerance.isFinite() && relTolerance >= 0 && absTolerance >= 0) {
