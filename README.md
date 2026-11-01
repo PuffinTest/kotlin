@@ -25,6 +25,6 @@ val status = runTests(cases)
 
 The runner returns `0` when all cases pass and `1` when a case fails or no cases match. Each case runs independently. Failure reports show the case, expectation message, expected and actual values when available, and the first stack location outside PuffinTest.
 
-The main helpers are `expectEqual`, `expectNotEqual`, `expectTrue`, `expectFalse`, `expectContains`, `expectThrows<T>`, and `fail`. `runTests` also accepts `filter`, `tag`, `failFast`, `beforeEach`, and `afterEach` options.
+The main helpers are `expectEqual`, `expectNotEqual`, `expectClose`, `expectTrue`, `expectFalse`, `expectContains`, `expectThrows<T>`, and `fail`. `runTests` also accepts `filter`, `tag`, `failFast`, `beforeEach`, and `afterEach` options.
 
 This implementation is an early draft and has not yet been verified. Equality follows Kotlin's `==` semantics except that array values are compared with Java deep equality. It is synchronous and JVM-only.

@@ -51,8 +51,10 @@ fun expectClose(actual: Double, expected: Double, relTolerance: Double = 1e-9, a
     require(relTolerance.isFinite() && absTolerance.isFinite() && relTolerance >= 0 && absTolerance >= 0) {
         "tolerances must be finite and nonnegative"
     }
+    val difference = kotlin.math.abs(actual - expected)
+    val scale = maxOf(kotlin.math.abs(actual), kotlin.math.abs(expected))
     val close = actual == expected || (actual.isFinite() && expected.isFinite() &&
-        kotlin.math.abs(actual - expected) <= maxOf(relTolerance * maxOf(kotlin.math.abs(actual), kotlin.math.abs(expected)), absTolerance))
+        (difference <= absTolerance || (scale != 0.0 && difference / scale <= relTolerance)))
     if (!close) throw ExpectationFailure("Values are not close", expected, actual, hasValues = true)
 }
 
