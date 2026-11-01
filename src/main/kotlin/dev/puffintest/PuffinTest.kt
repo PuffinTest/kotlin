@@ -77,7 +77,13 @@ fun expectNotEndsWith(actual: String, suffix: String, message: String? = null) {
 /** Fail unless [actual] has a length in the inclusive [minimum] to [maximum] range. */
 fun expectLengthBetween(actual: Any, minimum: Int, maximum: Int, message: String? = null) {
     require(minimum >= 0 && maximum >= 0 && minimum <= maximum) { "length bounds must be nonnegative and ordered" }
-    val length = when (actual) {
+    val length = lengthOf(actual)
+    if (length !in minimum..maximum) {
+        throw ExpectationFailure(message ?: "Value length is outside the expected range", "length between $minimum and $maximum, inclusive", length, hasValues = true)
+    }
+}
+
+private fun lengthOf(actual: Any): Int = when (actual) {
         is CharSequence -> actual.length
         is Collection<*> -> actual.size
         is Map<*, *> -> actual.size
@@ -92,9 +98,17 @@ fun expectLengthBetween(actual: Any, minimum: Int, maximum: Int, message: String
         is ShortArray -> actual.size
         else -> throw IllegalArgumentException("value must be a collection, map, string, or array")
     }
-    if (length !in minimum..maximum) {
-        throw ExpectationFailure(message ?: "Value length is outside the expected range", "length between $minimum and $maximum, inclusive", length, hasValues = true)
-    }
+
+/** Fail unless [actual] has no items or characters. */
+fun expectEmpty(actual: Any, message: String? = null) {
+    val length = lengthOf(actual)
+    if (length != 0) throw ExpectationFailure(message ?: "Expected an empty value", 0, length, hasValues = true)
+}
+
+/** Fail unless [actual] has at least one item or character. */
+fun expectNotEmpty(actual: Any, message: String? = null) {
+    val length = lengthOf(actual)
+    if (length == 0) throw ExpectationFailure(message ?: "Expected a non-empty value", "at least 1 item", 0, hasValues = true)
 }
 
 /** Fail unless two numbers are close under relative and absolute tolerances. */
