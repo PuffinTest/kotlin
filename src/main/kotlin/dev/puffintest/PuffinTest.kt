@@ -212,6 +212,14 @@ inline fun <reified T : Throwable> expectThrows(noinline block: () -> Unit): T {
     throw ExpectationFailure("Expected ${T::class.simpleName} to be thrown, got $actual", T::class.simpleName, actual, hasValues = true)
 }
 
+/** Fail unless [substring] occurs in [error]'s message. */
+fun expectErrorMessage(error: Throwable, substring: String, message: String? = null) {
+    val actual = error.message.orEmpty()
+    if (!actual.contains(substring)) {
+        throw ExpectationFailure(message ?: "Error message does not contain the expected text", "error message containing $substring", actual, hasValues = true)
+    }
+}
+
 /** Run cases sequentially and return 0 on success or 1 on failure. */
 fun runTests(
     cases: Iterable<TestCase>,
