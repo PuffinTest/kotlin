@@ -152,6 +152,16 @@ fun expectLessThan(actual: Double, threshold: Double) {
     if (!(actual < threshold)) throw ExpectationFailure("Value is not less than the threshold", "less than $threshold", actual, hasValues = true)
 }
 
+/** Fail unless [actual] is greater than or equal to [threshold]. */
+fun expectAtLeast(actual: Double, threshold: Double) {
+    if (!(actual >= threshold)) throw ExpectationFailure("Value is below the minimum threshold", "at least $threshold", actual, hasValues = true)
+}
+
+/** Fail unless [actual] is less than or equal to [threshold]. */
+fun expectAtMost(actual: Double, threshold: Double) {
+    if (!(actual <= threshold)) throw ExpectationFailure("Value is above the maximum threshold", "at most $threshold", actual, hasValues = true)
+}
+
 /** Fail unless [actual] is true. */
 fun expectTrue(actual: Boolean, message: String? = null) {
     if (!actual) throw ExpectationFailure(message ?: "Expected true", true, actual, hasValues = true)
