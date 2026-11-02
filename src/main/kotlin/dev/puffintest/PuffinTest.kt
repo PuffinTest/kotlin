@@ -144,6 +144,16 @@ fun expectNotClose(actual: Double, expected: Double, relTolerance: Double = 1e-9
     if (close) throw ExpectationFailure("Values are unexpectedly close", "not close to $expected", actual, hasValues = true)
 }
 
+/** Fail unless [actual] is finite (neither NaN nor infinity). */
+fun expectFinite(actual: Double) {
+    if (!actual.isFinite()) throw ExpectationFailure("Value is not finite", "a finite number", actual, hasValues = true)
+}
+
+/** Fail unless [actual] is NaN or positive or negative infinity. */
+fun expectNotFinite(actual: Double) {
+    if (actual.isFinite()) throw ExpectationFailure("Value is unexpectedly finite", "NaN or infinity", actual, hasValues = true)
+}
+
 /** Fail unless [actual] is between [minimum] and [maximum], inclusive. */
 fun expectBetween(actual: Double, minimum: Double, maximum: Double) {
     require(!minimum.isNaN() && !maximum.isNaN() && minimum <= maximum) {
