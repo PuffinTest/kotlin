@@ -38,6 +38,7 @@ fun main() {
                 expectAtLeast(3.0, 3.0)
                 expectAtMost(3.0, 3.0)
                 expectNotBetween(4.0, 1.0, 3.0)
+                expectNotClose(0.1, 0.9)
             },
             test("finds an item", tags = setOf("unit")) {
                 expectContains(listOf("puffin", "tern"), "puffin")

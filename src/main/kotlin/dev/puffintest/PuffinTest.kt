@@ -132,6 +132,18 @@ fun expectClose(actual: Double, expected: Double, relTolerance: Double = 1e-9, a
     if (!close) throw ExpectationFailure("Values are not close", expected, actual, hasValues = true)
 }
 
+/** Fail if two numbers are close within relative or absolute tolerance. */
+fun expectNotClose(actual: Double, expected: Double, relTolerance: Double = 1e-9, absTolerance: Double = 0.0) {
+    require(relTolerance.isFinite() && absTolerance.isFinite() && relTolerance >= 0 && absTolerance >= 0) {
+        "tolerances must be finite and nonnegative"
+    }
+    val difference = kotlin.math.abs(actual - expected)
+    val scale = maxOf(kotlin.math.abs(actual), kotlin.math.abs(expected))
+    val close = actual == expected || (actual.isFinite() && expected.isFinite() &&
+        (difference <= absTolerance || (scale != 0.0 && difference / scale <= relTolerance)))
+    if (close) throw ExpectationFailure("Values are unexpectedly close", "not close to $expected", actual, hasValues = true)
+}
+
 /** Fail unless [actual] is between [minimum] and [maximum], inclusive. */
 fun expectBetween(actual: Double, minimum: Double, maximum: Double) {
     require(!minimum.isNaN() && !maximum.isNaN() && minimum <= maximum) {
