@@ -99,6 +99,15 @@ private fun lengthOf(actual: Any): Int = when (actual) {
         else -> throw IllegalArgumentException("value must be a collection, map, string, or array")
     }
 
+/** Fail unless [actual] has exactly [expected] items or characters. */
+fun expectLength(actual: Any, expected: Int, message: String? = null) {
+    require(expected >= 0) { "expected length must be nonnegative" }
+    val length = lengthOf(actual)
+    if (length != expected) {
+        throw ExpectationFailure(message ?: "Value has an unexpected length", expected, length, hasValues = true)
+    }
+}
+
 /** Fail unless [actual] has no items or characters. */
 fun expectEmpty(actual: Any, message: String? = null) {
     val length = lengthOf(actual)

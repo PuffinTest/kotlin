@@ -4,6 +4,7 @@ import dev.puffintest.expectContains
 import dev.puffintest.expectEqual
 import dev.puffintest.expectErrorMessage
 import dev.puffintest.expectLengthBetween
+import dev.puffintest.expectLength
 import dev.puffintest.expectNull
 import dev.puffintest.expectNotNull
 import dev.puffintest.expectEmpty
@@ -29,6 +30,7 @@ fun main() {
                 expectContains("puffin test", "test")
                 expectNotContains("puffin test", "penguin")
                 expectLengthBetween(listOf("puffin", "tern"), 1, 3)
+                expectLength(listOf("puffin", "tern"), 2)
             },
         ),
     )
