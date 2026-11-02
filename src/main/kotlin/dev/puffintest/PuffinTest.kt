@@ -142,6 +142,16 @@ fun expectBetween(actual: Double, minimum: Double, maximum: Double) {
     }
 }
 
+/** Fail if [actual] is in the inclusive [minimum] to [maximum] range. */
+fun expectNotBetween(actual: Double, minimum: Double, maximum: Double) {
+    require(!minimum.isNaN() && !maximum.isNaN() && minimum <= maximum) {
+        "minimum must be less than or equal to maximum"
+    }
+    if (!(actual < minimum || actual > maximum)) {
+        throw ExpectationFailure("Value is inside the unexpected range", "outside [$minimum, $maximum]", actual, hasValues = true)
+    }
+}
+
 /** Fail unless [actual] is strictly greater than [threshold]. */
 fun expectGreaterThan(actual: Double, threshold: Double) {
     if (!(actual > threshold)) throw ExpectationFailure("Value is not greater than the threshold", "greater than $threshold", actual, hasValues = true)

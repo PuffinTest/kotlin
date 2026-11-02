@@ -13,6 +13,7 @@ import dev.puffintest.expectGreaterThan
 import dev.puffintest.expectLessThan
 import dev.puffintest.expectAtLeast
 import dev.puffintest.expectAtMost
+import dev.puffintest.expectNotBetween
 import dev.puffintest.expectEmpty
 import dev.puffintest.expectNotEmpty
 import dev.puffintest.runTests
@@ -36,6 +37,7 @@ fun main() {
                 expectLessThan(2.0, 3.0)
                 expectAtLeast(3.0, 3.0)
                 expectAtMost(3.0, 3.0)
+                expectNotBetween(4.0, 1.0, 3.0)
             },
             test("finds an item", tags = setOf("unit")) {
                 expectContains(listOf("puffin", "tern"), "puffin")
