@@ -229,6 +229,20 @@ fun expectErrorMessage(error: Throwable, substring: String, message: String? = n
     }
 }
 
+/** Fail unless [pattern] matches somewhere in [actual]. */
+fun expectMatches(actual: String, pattern: String, message: String? = null) {
+    if (!Regex(pattern).containsMatchIn(actual)) {
+        throw ExpectationFailure(message ?: "Text does not match the expected pattern", "text matching $pattern", actual, hasValues = true)
+    }
+}
+
+/** Fail if [pattern] matches anywhere in [actual]. */
+fun expectNotMatches(actual: String, pattern: String, message: String? = null) {
+    if (Regex(pattern).containsMatchIn(actual)) {
+        throw ExpectationFailure(message ?: "Text unexpectedly matches the pattern", "text not matching $pattern", actual, hasValues = true)
+    }
+}
+
 /** Run cases sequentially and return 0 on success or 1 on failure. */
 fun runTests(
     cases: Iterable<TestCase>,

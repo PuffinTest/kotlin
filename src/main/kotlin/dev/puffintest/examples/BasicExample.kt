@@ -7,6 +7,8 @@ import dev.puffintest.expectLengthBetween
 import dev.puffintest.expectLength
 import dev.puffintest.expectNull
 import dev.puffintest.expectNotNull
+import dev.puffintest.expectMatches
+import dev.puffintest.expectNotMatches
 import dev.puffintest.expectEmpty
 import dev.puffintest.expectNotEmpty
 import dev.puffintest.runTests
@@ -24,6 +26,8 @@ fun main() {
                 expectNotEmpty(listOf("puffin"))
                 val error = expectThrows<NumberFormatException> { "bad".toInt() }
                 expectErrorMessage(error, "bad")
+                expectMatches("order-4821 accepted", "order-\\d+ accepted")
+                expectNotMatches("request failed", "\\b2xx\\b")
             },
             test("finds an item", tags = setOf("unit")) {
                 expectContains(listOf("puffin", "tern"), "puffin")
