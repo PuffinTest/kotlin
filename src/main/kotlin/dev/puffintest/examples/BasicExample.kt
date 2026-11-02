@@ -9,6 +9,8 @@ import dev.puffintest.expectNull
 import dev.puffintest.expectNotNull
 import dev.puffintest.expectMatches
 import dev.puffintest.expectNotMatches
+import dev.puffintest.expectGreaterThan
+import dev.puffintest.expectLessThan
 import dev.puffintest.expectEmpty
 import dev.puffintest.expectNotEmpty
 import dev.puffintest.runTests
@@ -28,6 +30,8 @@ fun main() {
                 expectErrorMessage(error, "bad")
                 expectMatches("order-4821 accepted", "order-\\d+ accepted")
                 expectNotMatches("request failed", "\\b2xx\\b")
+                expectGreaterThan(5.0, 3.0)
+                expectLessThan(2.0, 3.0)
             },
             test("finds an item", tags = setOf("unit")) {
                 expectContains(listOf("puffin", "tern"), "puffin")

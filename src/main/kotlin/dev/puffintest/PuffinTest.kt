@@ -142,6 +142,16 @@ fun expectBetween(actual: Double, minimum: Double, maximum: Double) {
     }
 }
 
+/** Fail unless [actual] is strictly greater than [threshold]. */
+fun expectGreaterThan(actual: Double, threshold: Double) {
+    if (!(actual > threshold)) throw ExpectationFailure("Value is not greater than the threshold", "greater than $threshold", actual, hasValues = true)
+}
+
+/** Fail unless [actual] is strictly less than [threshold]. */
+fun expectLessThan(actual: Double, threshold: Double) {
+    if (!(actual < threshold)) throw ExpectationFailure("Value is not less than the threshold", "less than $threshold", actual, hasValues = true)
+}
+
 /** Fail unless [actual] is true. */
 fun expectTrue(actual: Boolean, message: String? = null) {
     if (!actual) throw ExpectationFailure(message ?: "Expected true", true, actual, hasValues = true)
