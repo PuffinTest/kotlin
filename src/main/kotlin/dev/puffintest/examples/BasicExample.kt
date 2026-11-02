@@ -15,6 +15,8 @@ import dev.puffintest.expectAtLeast
 import dev.puffintest.expectAtMost
 import dev.puffintest.expectNotBetween
 import dev.puffintest.expectFinite
+import dev.puffintest.expectNaN
+import dev.puffintest.expectNotNaN
 import dev.puffintest.expectEmpty
 import dev.puffintest.expectNotEmpty
 import dev.puffintest.runTests
@@ -41,6 +43,8 @@ fun main() {
                 expectNotBetween(4.0, 1.0, 3.0)
                 expectNotClose(0.1, 0.9)
                 expectFinite(3.14)
+                expectNaN(Double.NaN)
+                expectNotNaN(3.14)
             },
             test("finds an item", tags = setOf("unit")) {
                 expectContains(listOf("puffin", "tern"), "puffin")

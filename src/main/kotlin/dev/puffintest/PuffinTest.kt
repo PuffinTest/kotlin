@@ -154,6 +154,16 @@ fun expectNotFinite(actual: Double) {
     if (actual.isFinite()) throw ExpectationFailure("Value is unexpectedly finite", "NaN or infinity", actual, hasValues = true)
 }
 
+/** Fail unless [actual] is NaN. */
+fun expectNaN(actual: Double) {
+    if (!actual.isNaN()) throw ExpectationFailure("Value is not NaN", "NaN", actual, hasValues = true)
+}
+
+/** Fail if [actual] is NaN. */
+fun expectNotNaN(actual: Double) {
+    if (actual.isNaN()) throw ExpectationFailure("Value is unexpectedly NaN", "not NaN", actual, hasValues = true)
+}
+
 /** Fail unless [actual] is between [minimum] and [maximum], inclusive. */
 fun expectBetween(actual: Double, minimum: Double, maximum: Double) {
     require(!minimum.isNaN() && !maximum.isNaN() && minimum <= maximum) {
